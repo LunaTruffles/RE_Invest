@@ -43,6 +43,7 @@ export default function InputDeal() {
     });
      if (latitude !== 0 && longitude !== 0){
     dispatch(addProperty(deal, latitude, longitude))
+    console.log("hi")
      }
 
   }

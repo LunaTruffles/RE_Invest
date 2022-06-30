@@ -28,8 +28,8 @@ export default function Property(props) {
   const { property } = props;
   const [editMode, setEditMode] = useState(false)
   const [deal, setDeal] = useState(property.deal)
-  const [latitude] = useState(0)
-  const [longitude] = useState(0)
+  const [latitude] = useState(property.latitude)
+  const [longitude] = useState(property.longitude)
   console.log('Cordinates: ', latitude, ', ', longitude)
   const center = [latitude, longitude];
 
@@ -52,7 +52,6 @@ export default function Property(props) {
     alignItems="center"
     justifyContent="center"
     >
-      {latitude !== 0 && longitude !== 0 &&
         <Box 
         sx={{
           width: 300
@@ -194,8 +193,6 @@ export default function Property(props) {
           </Card>
         </Box>
       </Box>
-      }
-    
   </Box>
   )
 }
