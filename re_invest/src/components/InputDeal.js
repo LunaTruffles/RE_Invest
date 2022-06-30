@@ -53,7 +53,7 @@ export default function InputDeal() {
     alignItems="center"
     justifyContent="center"
     >
-    <Box sx={{ maxWidth: 320, marginTop: 5 }}  >
+    <Box sx={{ maxWidth: 320, marginTop: 7 }}  >
 
         <form noValidate autoComplete="off" onSubmit={handleSubmit}> 
 
