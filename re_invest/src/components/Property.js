@@ -23,14 +23,13 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import { defaultMarker } from "./map/marker";
 import { popupContent, popupText } from "./map/popup";
 import '../css/App.css';
-import { useEffect } from 'react';
 
 export default function Property(props) {
   const { property } = props;
   const [editMode, setEditMode] = useState(false)
   const [deal, setDeal] = useState(property.deal)
-  const [latitude, setLatitude] = useState(0)
-  const [longitude, setLongitude] = useState(0)
+  const [latitude] = useState(0)
+  const [longitude] = useState(0)
   console.log('Cordinates: ', latitude, ', ', longitude)
   const center = [latitude, longitude];
 
