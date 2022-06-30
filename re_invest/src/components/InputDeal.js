@@ -43,7 +43,6 @@ export default function InputDeal() {
     });
      if (latitude !== 0 && longitude !== 0){
     dispatch(addProperty(deal, latitude, longitude))
-    console.log("hi")
      }
 
   }
@@ -54,7 +53,7 @@ export default function InputDeal() {
     alignItems="center"
     justifyContent="center"
     >
-    <Box sx={{ maxWidth: 320 }}  >
+    <Box sx={{ maxWidth: 320, marginTop: 5 }}  >
 
         <form noValidate autoComplete="off" onSubmit={handleSubmit}> 
 

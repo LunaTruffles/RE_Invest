@@ -11,6 +11,7 @@ export default function Donations() {
     display="flex" 
     alignItems="center"
     justifyContent="center"
+    sx={{marginTop: 7 }}
     >
         {showItem ? 
           <Box 
@@ -26,7 +27,7 @@ export default function Donations() {
           }}>
         <Button 
         variant="contained"  
-        sx={{ marginTop: 2, marginBottom: 2, width: 160 }}
+        sx={{ marginTop: 2, width: 160 }}
         disabled>$10.00</Button>
         <br></br>  <br></br> 
         <img src="https://media.giphy.com/media/ovW7ypiJI8Ypy/giphy.gif" alt='MONEY PLEEEEEEEEEEEASE'/> 
