@@ -1,6 +1,6 @@
 # RE_React
 
-<h4>Welcome to my REACT app!</h4>
+<h2>Welcome to my REACT app!</h2>
 
 <p>This app was created for people who invest (or hope invest) in real estate</p>
 
@@ -10,10 +10,10 @@
 
 <p>To start the app, please make sure you are in the "re_invest" directory before running: npm start.</p>
 
-<h5>Technologies used</h5>
+<h3>Technologies used</h3>
 REACT | REDUX | Material UI | Google Maps API | Stripe CLI
 
-<h5>Here are some terms that may be useful from Investopedia</h5>
+<h3>Here are some terms that may be useful from Investopedia</h3>
 
 <p>SF: sqaure foot</p>
 <p>[NOI](https://www.investopedia.com/terms/n/noi.asp): NOI is a before-tax figure, appearing on a property’s income and cash flow statement, that excludes principal and interest payments on loans, capital expenditures, depreciation, and amortization. When this metric is used in other industries, it is referred to as “EBIT,” which stands for “earnings before interest and taxes.”</p>
