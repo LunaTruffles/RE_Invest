@@ -9,6 +9,9 @@ import Button from '@mui/material/Button';
 import { purple } from '@mui/material/colors';
 import Box from '@mui/material/Box';
 import InputAdornment from '@mui/material/InputAdornment';
+import KeyIcon from '@mui/icons-material/Key';
+import Popover from '@mui/material/Popover';
+import Typography from '@mui/material/Typography';
 
 
 const options = {
@@ -31,7 +34,19 @@ export default function InputDeal() {
   const [latitude, setLatitude] = useState(0)
   const [longitude, setLongitude] = useState(0)
   const [deal, setDeal] = useState({})
+  const [anchorEl, setAnchorEl] = useState('');
   const dispatch = useDispatch()
+
+
+  const handlePopoverOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
 
   const handleSubmit = async e => {
     e.preventDefault()
@@ -41,7 +56,9 @@ export default function InputDeal() {
     setLatitude( response.results[0].geometry.location.lat)
     setLongitude (response.results[0].geometry.location.lng)
     });
+
      if (latitude !== 0 && longitude !== 0){
+    
     dispatch(addProperty(deal, latitude, longitude))
      }
 
@@ -157,7 +174,37 @@ export default function InputDeal() {
             </FormControl>
 
             <FormControl fullWidth sx={{ mx: 'auto', width: 130, p: 1.65,  m: 0 }}>
-                <InputLabel htmlFor="outlined-adornment-amount">Income</InputLabel>
+                <InputLabel htmlFor="outlined-adornment-amount">Income (NOI)
+                    <KeyIcon
+                    aria-owns={open ? 'mouse-over-popover' : undefined}
+                    aria-haspopup="true"
+                    onMouseEnter={handlePopoverOpen}
+                    onMouseLeave={handlePopoverClose}
+                    />
+                    <Popover
+                    id="mouse-over-popover"
+                    sx={{
+                    pointerEvents: 'none',
+                    width: 490
+                    }}
+                    open={open}
+                    anchorEl={anchorEl}
+                    anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                    }}
+                    transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                    }}
+                    onClose={handlePopoverClose}
+                    disableRestoreFocus
+                >
+                    <Typography variant="caption" sx={{ p: 1 }} gutterBottom>
+                        Net operating income (NOI) is a calculation used to analyze the profitability of income-generating real estate investments. NOI equals all revenue from the property, minus all reasonably necessary operating expenses.
+                    </Typography>
+                </Popover>
+                </InputLabel>
                 <OutlinedInput
                     id="outlined-adornment-amount"
                     value={deal.income} 
@@ -170,7 +217,7 @@ export default function InputDeal() {
             </FormControl>
 
             <FormControl fullWidth sx={{ mx: 'auto', width: 130, p: 1.65,  m: 0 }}>
-                <InputLabel htmlFor="outlined-adornment-amount">SF</InputLabel>
+                <InputLabel htmlFor="outlined-adornment-amount">Square Footage</InputLabel>
                 <OutlinedInput
                     id="outlined-adornment-amount"
                     value={deal.sf} 
