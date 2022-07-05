@@ -22,7 +22,22 @@ import InputLabel from '@mui/material/InputLabel';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import { defaultMarker } from "./map/marker";
 import { popupContent, popupText } from "./map/popup";
+import { styled } from '@mui/material/styles';
+import MuiGrid from '@mui/material/Grid';
+import Divider from '@mui/material/Divider';
+import KeyIcon from '@mui/icons-material/Key';
+import Popover from '@mui/material/Popover';
 import '../css/App.css';
+
+
+
+const Grid = styled(MuiGrid)(({ theme }) => ({
+  width: '100%',
+  ...theme.typography.body2,
+  '& [role="separator"]': {
+    margin: theme.spacing(0, 2),
+  },
+}));
 
 export default function Property(props) {
   const { property } = props;
@@ -30,11 +45,27 @@ export default function Property(props) {
   const [deal, setDeal] = useState(property.deal)
   const [latitude] = useState(property.latitude)
   const [longitude] = useState(property.longitude)
-  console.log('Cordinates: ', latitude, ', ', longitude)
+  const [anchorEl, setAnchorEl] = useState('');
   const center = [latitude, longitude];
 
   const dispatch = useDispatch()
 
+  const capRate = ((deal.income / deal.price) * 100).toFixed(2)
+  const perSf = (deal.price / deal.sf).toFixed(2)
+  const perUnit = (deal.price / deal.units).toFixed(2)
+  const eCapRate = ((deal.exitIncome / deal.exitPrice) * 100).toFixed(2)
+  const ePerSf = (deal.exitPrice / deal.exitSf).toFixed(2)
+  const ePerUnit = (deal.exitPrice / deal.exitUnits).toFixed(2)
+
+  const handlePopoverOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
   
   const deleteItem = (id) => {
     dispatch(deleteProperty(id))
@@ -93,15 +124,23 @@ export default function Property(props) {
             // subheader={DATEEEEEEEEE (needs to be added)}
           />
         <CardContent>
-          <Typography variant="subtitle1" gutterBottom component="div" sx={{paddingLeft:12}}>
-          {deal.propertyType}
-          </Typography>
-          <Typography variant="subtitle2" gutterBottom component="div" sx={{paddingLeft:8}}>
-            {deal.address}
-            <br></br>
-            {deal.city}, {deal.usState}, {deal.zipcode}
-          </Typography>
-        <TableContainer sx={{ width: 250 }}>
+          <Grid container>
+            <Grid item xs >
+              {deal.address}
+              <br></br>
+              {deal.city}, {deal.usState}, {deal.zipcode}
+            </Grid>
+            <Divider orientation="vertical" flexItem>
+            </Divider>
+            <Grid item xs sx={{ paddingLeft:2 }}>
+              {deal.propertyType}
+              <br></br>
+              Size: {deal.sf}sf
+              <br></br>
+              Unit(s): {deal.units}
+            </Grid>
+          </Grid>
+        <TableContainer sx={{ width: 270 }}>
           <Table aria-label="spanning table">
             <TableBody>
                 <TableRow>
@@ -113,12 +152,47 @@ export default function Property(props) {
                   <TableCell>${deal.income}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell>SF</TableCell>
-                  <TableCell>{deal.sf}</TableCell>
+                  <TableCell>Cap Rate                    
+                    <KeyIcon
+                    aria-owns={open ? 'mouse-over-popover' : undefined}
+                    aria-haspopup="true"
+                    onMouseEnter={handlePopoverOpen}
+                    onMouseLeave={handlePopoverClose}
+                    />
+                    <Popover
+                    id="mouse-over-popover"
+                    sx={{
+                    pointerEvents: 'none',
+                    width: 490
+                    }}
+                    open={open}
+                    anchorEl={anchorEl}
+                    anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                    }}
+                    transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                    }}
+                    onClose={handlePopoverClose}
+                    disableRestoreFocus
+                    >
+                    <Typography variant="caption" sx={{ p: 1 }}>
+                    Capitalization Rate
+                    <br></br>
+                    This measure is computed based on the net income which the property is expected to generate and is calculated by dividing net operating income by property asset value and is expressed as a percentage. It is used to estimate the investor's potential return on their investment in the real estate market.
+                    </Typography>
+                    </Popover></TableCell>
+                  <TableCell>{capRate}%</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell>Units</TableCell>
-                  <TableCell>{deal.units}</TableCell>
+                  <TableCell>$/sf</TableCell>
+                  <TableCell>${perSf}/sf</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>$/Unit</TableCell>
+                  <TableCell>${perUnit}/unit</TableCell>
                 </TableRow>
             </TableBody>
           </Table>
@@ -129,6 +203,17 @@ export default function Property(props) {
         <Typography variant="h6" gutterBottom component="div" sx={{ paddingLeft:10.5 }}>
             Exit Plan
           </Typography>
+
+          <Grid container>
+            <Grid item xs sx={{ paddingLeft:2 }} >
+            Size: {deal.exiSf}sf
+            </Grid>
+            <Divider orientation="vertical" flexItem>
+            </Divider>
+            <Grid item xs sx={{ paddingLeft:2 }}>
+              Unit(s): {deal.exitUnits}
+            </Grid>
+          </Grid>
     
         <TableContainer sx={{ width: 250 }}>
           <Table aria-label="spanning table">
@@ -142,12 +227,16 @@ export default function Property(props) {
                   <TableCell>${deal.exitIncome}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell>Exit SF</TableCell>
-                  <TableCell>{deal.exitSf}</TableCell>
+                <TableCell>Exit Cap</TableCell>
+                  <TableCell>{eCapRate}%</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell>Exit Units</TableCell>
-                  <TableCell>{deal.exitUnits}</TableCell>
+                  <TableCell>Exit $/sf</TableCell>
+                  <TableCell>${ePerSf}/sf</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Exit $/Unit</TableCell>
+                  <TableCell>${ePerUnit}/unit</TableCell>
                 </TableRow>
             </TableBody>
           </Table>
