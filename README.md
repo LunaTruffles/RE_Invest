@@ -16,7 +16,7 @@ REACT | REDUX | Material UI | Google Maps API | Stripe CLI
 <h3>Here are some terms that may be useful from Investopedia</h3>
 
 <p>SF: sqaure foot</p>
-<p></p>
+
 [NOI](https://www.investopedia.com/terms/n/noi.asp): NOI is a before-tax figure, appearing on a property’s income and cash flow statement, that excludes principal and interest payments on loans, capital expenditures, depreciation, and amortization. When this metric is used in other industries, it is referred to as “EBIT,” which stands for “earnings before interest and taxes.”
-<p></p>
+
 [Capitalization Rate](https://www.investopedia.com/terms/c/capitalizationrate.asp)(AKA Cap Rate):This measure is computed based on the net income which the property is expected to generate and is calculated by dividing net operating income by property asset value and is expressed as a percentage. It is used to estimate the investor's potential return on their investment in the real estate market.
